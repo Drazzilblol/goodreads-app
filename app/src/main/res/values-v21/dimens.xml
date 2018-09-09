@@ -1,0 +1,9 @@
+<resources>
+
+    <dimen name="introduction_description_padding">40dp</dimen>
+    <dimen name="toolbar_margin">25dp</dimen>
+    <dimen name="btn_skip_padding">24dp</dimen>
+    <dimen name="activity_main_nav_header_height">185dp</dimen>
+    <dimen name="main_header_cover_padding_top">41dp</dimen>
+
+</resources>

@@ -1,0 +1,58 @@
+<resources>
+    <string name="app_name">Goodread</string>
+    <string name="close_button">Close</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="rating_updating">Update rating, please wait!</string>
+
+    <string name="transition_name">blablabla</string>
+
+    <!--main menu-->
+    <string name="navigation_menu_home">Home</string>
+    <string name="navigation_menu_logout">LogOut</string>
+    <string name="navigation_menu_preferences">Preferences</string>
+    <string name="navigation_menu_favorited">Favored</string>
+
+    <!--intro-->
+    <string name="slide_1_desc">Place the assessment books!</string>
+    <string name="slide_2_desc">Add books to favorites!</string>
+    <string name="slide_3_desc">Browse information about books!</string>
+
+    <string name="next">next</string>
+    <string name="skip">skip</string>
+    <string name="back">back</string>
+    <string name="start">finish</string>
+
+    <!--preferences-->
+    <string name="new_preference_title">NEW list size</string>
+    <string name="top_preference_title">TOP list size</string>
+    <string name="new_preference_summary">NEW list size</string>
+    <string name="top_preference_summary">TOP list size</string>
+
+    <string name="new_preference_key">new_books_list_size</string>
+    <string name="top_preference_key">top_books_list_size</string>
+
+    <!--titles-->
+    <string name="book_list_fragment_title">Book List</string>
+    <string name="search_results_fragment_title">Search Results</string>
+    <string name="user_info_fragment_title">User Info</string>
+    <string name="favored_book_fragment_title">Favored</string>
+    <string name="preferences_fragment_title">Preferences</string>
+
+    <!--dialogs-->
+    <string name="network_is_not_available">Network Is Not Available!</string>
+    <string name="authorization">Authorization</string>
+    <string name="loading_error">Oops, something wrong</string>
+    <string name="loading_error_button">Reload</string>
+
+    <string name="log_out">Log Out</string>
+    <string name="logout_dialog_question">Are you sure?</string>
+    <string name="button_yes">YES</string>
+    <string name="button_no">NO</string>
+
+    <!--card view-->
+    <string name="button_delete">DELETE</string>
+    <string name="button_rate">RATE</string>
+
+</resources>

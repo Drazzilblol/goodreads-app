@@ -1,0 +1,28 @@
+<resources>
+    <dimen name="info_cover_width">120dp</dimen>
+    <dimen name="info_cover_height">200dp</dimen>
+    <dimen name="header_text">16sp</dimen>
+    <dimen name="title_text_size">24sp</dimen>
+    <dimen name="text_size">16sp</dimen>
+    <dimen name="views_padding_large">16dp</dimen>
+    <dimen name="views_padding_normal">8dp</dimen>
+    <dimen name="views_padding_short">4dp</dimen>
+
+    <!--intro-->
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">20dp</dimen>
+    <dimen name="introduction_description_padding">40dp</dimen>
+    <dimen name="introduction_description_padding_bottom">120dp</dimen>
+    <dimen name="btn_skip_padding">0dp</dimen>
+
+    <dimen name="activity_book_details_image_height">220dp</dimen>
+    <dimen name="activity_book_details_fab_margin">16dp</dimen>
+
+    <dimen name="activity_main_nav_header_height">160dp</dimen>
+    <dimen name="main_header_cover">90dp</dimen>
+    <dimen name="main_header_cover_padding_top">@dimen/views_padding_large</dimen>
+
+    <dimen name="card_corner_radius">3dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+
+</resources>

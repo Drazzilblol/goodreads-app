@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/activity_main_nav_header_height"
+    android:background="@drawable/header_image"
+    android:gravity="left|center_vertical"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/views_padding_large"
+    android:paddingLeft="@dimen/views_padding_large"
+    android:paddingRight="@dimen/views_padding_large"
+    android:paddingTop="@dimen/main_header_cover_padding_top"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+    <ImageView
+        android:id="@+id/activity_main_header_image"
+        android:layout_width="@dimen/main_header_cover"
+        android:layout_height="@dimen/main_header_cover"
+        android:layout_gravity="left|top"
+        android:layout_weight="0"
+        android:adjustViewBounds="true"
+        android:paddingBottom="@dimen/views_padding_short"
+        android:scaleType="fitCenter"
+        app:srcCompat="@android:drawable/sym_def_app_icon" />
+
+    <TextView
+        android:id="@+id/activity_main_header_name_view"
+        style="@style/BaseHeaderTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|bottom"
+        android:layout_weight="1"
+        android:paddingTop="@dimen/views_padding_short" />
+
+</FrameLayout>

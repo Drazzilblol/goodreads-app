@@ -1,0 +1,15 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <ListPreference
+        android:entries="@array/entries"
+        android:entryValues="@array/entry_values"
+        android:key="top_books_list_size"
+        android:summary="@string/top_preference_summary"
+        android:title="@string/top_preference_title" />
+
+    <ListPreference
+        android:entries="@array/entries"
+        android:entryValues="@array/entry_values"
+        android:key="new_books_list_size"
+        android:summary="@string/new_preference_summary"
+        android:title="@string/new_preference_title" />
+</PreferenceScreen>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="entries">
+        <item>twenty</item>
+        <item>forty</item>
+        <item>sixty</item>
+    </string-array>
+
+    <string-array name="entry_values">
+        <item>20</item>
+        <item>40</item>
+        <item>60</item>
+    </string-array>
+
+    <string-array name="pages">
+        <item>All</item>
+        <item>Top</item>
+        <item>New</item>
+    </string-array>
+
+    <string-array name="intro_desc">
+        <item>@string/slide_1_desc</item>
+        <item>@string/slide_2_desc</item>
+        <item>@string/slide_3_desc</item>
+    </string-array>
+
+    <array name="intro_images">
+        <item>@drawable/slide_1_image</item>
+        <item>@drawable/slide_2_image</item>
+        <item>@drawable/slide_3_image</item>
+    </array>
+</resources>
