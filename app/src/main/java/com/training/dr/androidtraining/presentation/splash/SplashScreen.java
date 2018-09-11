@@ -16,18 +16,15 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Runnable r = new Runnable() {
-            @Override
-            public void run() {
-                GoodreadApi goodreadApi = GoodreadApi.getInstance();
-                SharedPreferences preferences = SPreferences.getInstance().getSharedPreferences();
-                if (preferences.getBoolean(Utils.FIRST_RUN, true)) {
-                    Navigator.goToIntroductionScreen(SplashScreen.this);
-                } else if (goodreadApi.isLoggedIn()) {
-                    Navigator.goToMainScreen(SplashScreen.this);
-                } else {
-                    Navigator.goToLoginScreen(SplashScreen.this);
-                }
+        Runnable r = () -> {
+            GoodreadApi goodreadApi = GoodreadApi.getInstance();
+            SharedPreferences preferences = SPreferences.getInstance().getSharedPreferences();
+            if (preferences.getBoolean(Utils.FIRST_RUN, true)) {
+                Navigator.goToIntroductionScreen(SplashScreen.this);
+            } else if (goodreadApi.isLoggedIn()) {
+                Navigator.goToMainScreen(SplashScreen.this);
+            } else {
+                Navigator.goToLoginScreen(SplashScreen.this);
             }
         };
         handler.postDelayed(r, 2500);

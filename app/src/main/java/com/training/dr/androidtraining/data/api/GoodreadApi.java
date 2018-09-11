@@ -10,15 +10,20 @@ import com.training.dr.androidtraining.presentation.common.events.TokenRetrieveL
 import com.training.dr.androidtraining.ulils.SPreferences;
 import com.training.dr.androidtraining.ulils.Utils;
 
+import java.util.concurrent.Callable;
+
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 import oauth.signpost.basic.DefaultOAuthConsumer;
 import oauth.signpost.basic.DefaultOAuthProvider;
 
 public class GoodreadApi {
 
-    private static final String AUTHORIZATION_WEBSITE_URL = "http://www.goodreads.com/oauth/authorize?mobile=1";
-    private static final String ACCESS_TOKEN_ENDPOINT_URL = "http://www.goodreads.com/oauth/access_token";
-    private static final String REQUEST_TOKEN_ENDPOINT_URL = "http://www.goodreads.com/oauth/request_token";
-    public static final String CALLBACK_URL = "http://disgustingmen.com/";
+    private static final String AUTHORIZATION_WEBSITE_URL = "https://www.goodreads.com/oauth/authorize?mobile=1";
+    private static final String ACCESS_TOKEN_ENDPOINT_URL = "https://www.goodreads.com/oauth/access_token";
+    private static final String REQUEST_TOKEN_ENDPOINT_URL = "https://www.goodreads.com/oauth/request_token";
+    public static final String CALLBACK_URL = "https://disgustingmen.com/";
 
     private DefaultOAuthConsumer oAuthConsumer;
     private DefaultOAuthProvider oAuthProvider;
@@ -47,6 +52,7 @@ public class GoodreadApi {
         LOGGED_IN = !TextUtils.isEmpty(oAuthConsumer.getToken()) && !TextUtils.isEmpty(oAuthConsumer.getTokenSecret());
     }
 
+
     private void getTokensFromPreferences() {
         String token = preferences.getString(Utils.OAUTH_TOKEN, null);
         String tokenSecret = preferences.getString(Utils.OAUTH_SECRET, null);
@@ -57,7 +63,19 @@ public class GoodreadApi {
     }
 
     public void login(TokenRetrieveListener listener) {
-        new RetrieveRequestTokenTask(listener, oAuthConsumer, oAuthProvider).execute(CALLBACK_URL);
+        Observable.fromCallable(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+                return oAuthProvider.retrieveRequestToken(oAuthConsumer, CALLBACK_URL);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        listener::onRetrieveToken
+                );
+
+
     }
 
     public void retrieveAccessToken(final String oAuthToken, final TokenRetrieveListener listener) {
@@ -70,6 +88,26 @@ public class GoodreadApi {
         };
         handler.postDelayed(r, 300);
 
+     /*   Observable.fromCallable(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                oAuthProvider.retrieveAccessToken(oAuthConsumer, oAuthToken);
+                SharedPreferences.Editor edit = preferences.edit();
+                edit.putString(Utils.OAUTH_TOKEN, oAuthConsumer.getToken());
+                edit.putString(Utils.OAUTH_SECRET, oAuthConsumer.getTokenSecret());
+                edit.apply();
+                GoodreadApi.getInstance().setLoggedIn(true);
+                oAuthProvider.retrieveAccessToken(oAuthConsumer, oAuthToken);
+                return true;
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        b -> listener.onRetrieveSecret()
+
+                );
+*/
     }
 
     public DefaultOAuthConsumer getoAuthConsumer() {

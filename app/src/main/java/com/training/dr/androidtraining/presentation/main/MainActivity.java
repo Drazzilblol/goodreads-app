@@ -37,9 +37,9 @@ import com.training.dr.androidtraining.data.models.User;
 import com.training.dr.androidtraining.data.services.ApiGetService;
 import com.training.dr.androidtraining.domain.workers.LogoutWorker;
 import com.training.dr.androidtraining.presentation.common.dialogs.LogOutDialog;
-import com.training.dr.androidtraining.presentation.main.adapters.BookFragmentPageAdapter;
 import com.training.dr.androidtraining.presentation.common.events.OnFragmentLoadedListener;
 import com.training.dr.androidtraining.presentation.common.events.OnResultDialog;
+import com.training.dr.androidtraining.presentation.main.adapters.BookFragmentPageAdapter;
 import com.training.dr.androidtraining.presentation.main.fragments.PrefsFragment;
 import com.training.dr.androidtraining.presentation.main.fragments.UserInfoFragment;
 import com.training.dr.androidtraining.ulils.FragmentsUtils;
@@ -49,21 +49,32 @@ import com.training.dr.androidtraining.ulils.Utils;
 import com.training.dr.androidtraining.ulils.db.DataBaseUtils;
 import com.training.dr.androidtraining.ulils.image.ImageLoadingManager;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnFragmentLoadedListener, OnResultDialog {
 
-    private User user;
-    private DrawerLayout drawer;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawer;
+
+    @BindView(R.id.activity_main_tab_layout)
+    TabLayout tabLayout;
+
+    @BindView(R.id.activity_main_toolbar)
+    Toolbar toolbar;
+
     private BroadcastReceiver br;
     private IntentFilter intentFilter;
     private FragmentManager fragmentManager;
     private View headerView;
-    private Toolbar toolbar;
+
     private ProgressDialog logOutProgress;
     private String tag;
     private DialogFragment logoutDialog;
-    private TabLayout tabLayout;
     private MenuItem searchItem;
+
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +83,8 @@ public class MainActivity extends AppCompatActivity
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
         setContentView(R.layout.activity_main);
-   //     setupWindowAnimations();
+        ButterKnife.bind(this);
+        //     setupWindowAnimations();
         logoutDialog = new LogOutDialog();
         fragmentManager = getSupportFragmentManager();
         tag = getResources().getString(R.string.book_list_fragment_title);
@@ -99,15 +111,12 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initViews() {
-        toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
         toolbar.setTitle(tag);
         setSupportActionBar(toolbar);
-        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        tabLayout = (TabLayout) findViewById(R.id.activity_main_tab_layout);
     }
 
     private void loadUser() {
@@ -150,20 +159,20 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initNavHeader() {
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        NavigationView navigationViewBottom = (NavigationView) findViewById(R.id.activity_main_drawer_bottom);
+        NavigationView navigationViewBottom = findViewById(R.id.activity_main_drawer_bottom);
         navigationViewBottom.setNavigationItemSelectedListener(this);
         headerView = navigationView.getHeaderView(0);
     }
 
     private void initNavHeaderText() {
-        TextView nameView = (TextView) headerView.findViewById(R.id.activity_main_header_name_view);
+        TextView nameView = headerView.findViewById(R.id.activity_main_header_name_view);
         nameView.setText(user.getName());
     }
 
     private void initNavHeaderImage() {
-        ImageView imageView = (ImageView) headerView.findViewById(R.id.activity_main_header_image);
+        ImageView imageView = headerView.findViewById(R.id.activity_main_header_image);
         ImageLoadingManager.startBuild()
                 .imageUrl(user.getAvatarUrl())
                 .placeholder(R.drawable.book_image_paceholder)
@@ -171,31 +180,28 @@ public class MainActivity extends AppCompatActivity
                 .rounded(true)
                 .load(imageView);
 
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UserInfoFragment userInfoFragment = UserInfoFragment.getInstance(user);
-                hideSearchAndTabLayout();
-                FragmentsUtils.addFragment(
-                        fragmentManager,
-                        R.id.frag_cont,
-                        userInfoFragment,
-                        true,
-                        true,
-                        tag);
-                drawer.closeDrawer(GravityCompat.START);
-            }
+        imageView.setOnClickListener(v -> {
+            UserInfoFragment userInfoFragment = UserInfoFragment.getInstance(user);
+            hideSearchAndTabLayout();
+            FragmentsUtils.addFragment(
+                    fragmentManager,
+                    R.id.frag_cont,
+                    userInfoFragment,
+                    true,
+                    true,
+                    tag);
+            drawer.closeDrawer(GravityCompat.START);
         });
     }
 
     private void initPager() {
-        ViewPager pager = (ViewPager) findViewById(R.id.activity_main_view_pager);
+        ViewPager pager = findViewById(R.id.activity_main_view_pager);
         FragmentStatePagerAdapter pagerAdapter = new BookFragmentPageAdapter(
                 fragmentManager,
                 user.getGoodreadId(),
                 this);
         pager.setAdapter(pagerAdapter);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.activity_main_tab_layout);
+        TabLayout tabLayout = findViewById(R.id.activity_main_tab_layout);
         tabLayout.setupWithViewPager(pager);
     }
 
