@@ -8,6 +8,6 @@ public final class ApiMethods {
     public static final String CURRENT_LOGGED_IN_USER = "/api/auth_user";
     public static final String USER_INFO_BY_ID = "/user/show/";
     public static final String REVIEW = "/review/";
-    public static final String DELETE =  "/review/destroy/";
+    public static final String DELETE = "/review/destroy/";
 
 }

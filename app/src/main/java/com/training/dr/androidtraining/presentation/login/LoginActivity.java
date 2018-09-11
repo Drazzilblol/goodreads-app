@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.github.scribejava.core.oauth.OAuth10aService;
 import com.training.dr.androidtraining.R;
 import com.training.dr.androidtraining.data.api.GoodreadApi;
 import com.training.dr.androidtraining.presentation.common.events.TokenRetrieveListener;
@@ -15,12 +16,15 @@ import com.training.dr.androidtraining.ulils.Navigator;
 
 import oauth.signpost.OAuth;
 
+import static com.training.dr.androidtraining.data.api.GoodreadApi.CALLBACK_URL;
+
 public class LoginActivity extends AppCompatActivity implements TokenRetrieveListener {
 
     private WebView webView;
     private ProgressDialog progress;
     private int counter = 0;
     private GoodreadApi goodreadApi;
+    private OAuth10aService oAuth10aService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,7 +34,6 @@ public class LoginActivity extends AppCompatActivity implements TokenRetrieveLis
         initProgress();
         initWebView();
         goodreadApi.login(this);
-
     }
 
     private void initProgress() {
@@ -42,9 +45,11 @@ public class LoginActivity extends AppCompatActivity implements TokenRetrieveLis
 
     private void initWebView() {
         webView = (WebView) findViewById(R.id.activity_login_web_view);
+        webView.getSettings().setJavaScriptEnabled(true);
+
         webView.setWebViewClient(new WebViewClient() {
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                if (url.contains(GoodreadApi.CALLBACK_URL)) {
+                if (url.contains(CALLBACK_URL)) {
                     Uri uri = Uri.parse(url);
                     String token = uri.getQueryParameter(OAuth.OAUTH_TOKEN);
                     if (counter == 0) {
@@ -55,6 +60,7 @@ public class LoginActivity extends AppCompatActivity implements TokenRetrieveLis
                 }
             }
         });
+
     }
 
     @Override
