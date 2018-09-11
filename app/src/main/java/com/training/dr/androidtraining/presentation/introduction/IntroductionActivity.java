@@ -15,27 +15,41 @@ import com.training.dr.androidtraining.ulils.Navigator;
 import com.training.dr.androidtraining.ulils.SPreferences;
 import com.training.dr.androidtraining.ulils.Utils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class IntroductionActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static int PAGE_COUNT = 3;
 
+    @BindView(R.id.activity_introduction_view_pager)
     private ViewPager viewPager;
-    private IntroductionFragmentPageAdapter introductionFragmentPageAdapter;
+
+    @BindView(R.id.dots)
     private Dots dots;
-    private Button btnBack, btnNext, btnSkip, btnStart;
+
+    @BindView(R.id.btn_back)
+    private Button btnBack;
+
+    @BindView(R.id.btn_next)
+    private Button btnNext;
+
+    @BindView(R.id.btn_skip)
+    private Button btnSkip;
+
+    @BindView(R.id.btn_start)
+    private Button btnStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_introduction);
-
-        viewPager = (ViewPager) findViewById(R.id.activity_introduction_view_pager);
-        dots = (Dots) findViewById(R.id.dots);
-        btnBack = (Button) findViewById(R.id.btn_back);
-        btnNext = (Button) findViewById(R.id.btn_next);
-        btnSkip = (Button) findViewById(R.id.btn_skip);
-        btnStart = (Button) findViewById(R.id.btn_start);
+        ButterKnife.bind(this);
+        btnBack = findViewById(R.id.btn_back);
+        btnNext = findViewById(R.id.btn_next);
+        btnSkip = findViewById(R.id.btn_skip);
+        btnStart = findViewById(R.id.btn_start);
 
         dots.setCheckedPosition(0);
 
@@ -43,7 +57,7 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
             Utils.changeStatusBarColor(getWindow());
         }
 
-        introductionFragmentPageAdapter = new IntroductionFragmentPageAdapter(getSupportFragmentManager());
+        IntroductionFragmentPageAdapter introductionFragmentPageAdapter = new IntroductionFragmentPageAdapter(getSupportFragmentManager());
         viewPager.setAdapter(introductionFragmentPageAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 

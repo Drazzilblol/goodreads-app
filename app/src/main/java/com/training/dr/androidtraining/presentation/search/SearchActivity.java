@@ -32,8 +32,6 @@ public class SearchActivity extends AppCompatActivity implements OnDataChangedLi
 
     private String tag;
     private FragmentManager fragmentManager;
-    private SearchView searchView;
-    private SearchManager searchManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +57,8 @@ public class SearchActivity extends AppCompatActivity implements OnDataChangedLi
     }
 
     private void initSearch() {
-        searchView = (SearchView) findViewById(R.id.search_view);
-        searchManager = (SearchManager)
+        SearchView searchView = findViewById(R.id.search_view);
+        SearchManager searchManager = (SearchManager)
                 getSystemService(Context.SEARCH_SERVICE);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(
                 new ComponentName(this, this.getClass())));
@@ -72,7 +70,7 @@ public class SearchActivity extends AppCompatActivity implements OnDataChangedLi
         }
 
         SearchView.SearchAutoComplete autoCompleteTextView =
-                (SearchView.SearchAutoComplete) searchView.findViewById(R.id.search_src_text);
+                searchView.findViewById(R.id.search_src_text);
         if (autoCompleteTextView != null) {
             autoCompleteTextView.setDropDownBackgroundDrawable(getResources()
                     .getDrawable(R.color.colorBackgroundLight));

@@ -24,13 +24,19 @@ import com.training.dr.androidtraining.presentation.common.fragments.AbstractLis
 import com.training.dr.androidtraining.presentation.favored.fragments.FavoredBooksListFragment;
 import com.training.dr.androidtraining.ulils.FragmentsUtils;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class FavoredBooks extends AppCompatActivity implements OnDataChangedListener,
         SearchView.OnQueryTextListener,
         OnFragmentLoadedListener {
 
     private String tag;
+
+    @BindView(R.id.activity_favored_toolbar)
     private Toolbar toolbar;
+
     private FragmentManager fragmentManager;
 
     @Override
@@ -40,6 +46,7 @@ public class FavoredBooks extends AppCompatActivity implements OnDataChangedList
             getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         }
         setContentView(R.layout.activity_favored_books);
+        ButterKnife.bind(this);
         setupWindowAnimations();
         fragmentManager = getSupportFragmentManager();
         tag = getResources().getString(R.string.favored_book_fragment_title);
@@ -58,7 +65,7 @@ public class FavoredBooks extends AppCompatActivity implements OnDataChangedList
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.activity_favored_toolbar);
+
         toolbar.setTitle(tag);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();

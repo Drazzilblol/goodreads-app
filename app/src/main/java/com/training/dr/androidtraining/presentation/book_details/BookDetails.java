@@ -2,7 +2,6 @@ package com.training.dr.androidtraining.presentation.book_details;
 
 import android.content.ContentUris;
 import android.content.ContentValues;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -10,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.LoaderManager;
@@ -19,12 +19,10 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
-import android.transition.Fade;
 import android.transition.Slide;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -42,6 +40,8 @@ import com.training.dr.androidtraining.ulils.NetworkUtils;
 import com.training.dr.androidtraining.ulils.db.DataBaseUtils;
 import com.training.dr.androidtraining.ulils.image.ImageLoadingManager;
 
+import butterknife.BindView;
+
 public class BookDetails extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>, CustomRatingBar.OnRatingChangedListener {
 
     private static final String TAG = BookDetails.class.getSimpleName();
@@ -50,9 +50,16 @@ public class BookDetails extends AppCompatActivity implements LoaderManager.Load
     private Cursor cursor;
     private Book book;
     private AlertDialog dialog;
+
+    @BindView(R.id.book_details_rating)
     private CustomRatingBar ratingBar;
+
+    @BindView(R.id.book_details_toolbar)
     private Toolbar toolbar;
+
+    @BindView(R.id.book_details_author_view)
     private TextView authorView;
+
     private ContentObserver contentObserver;
 
 
@@ -92,16 +99,11 @@ public class BookDetails extends AppCompatActivity implements LoaderManager.Load
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.network_is_not_available);
         builder.setCancelable(true);
-        builder.setNegativeButton(R.string.close_button, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton(R.string.close_button, (dialog, id) -> dialog.dismiss());
         dialog = builder.create();
     }
 
     private void initToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.book_details_toolbar);
         setSupportActionBar(toolbar);
         toolbarViewsFade();
         ActionBar actionBar = getSupportActionBar();
@@ -112,22 +114,19 @@ public class BookDetails extends AppCompatActivity implements LoaderManager.Load
     }
 
     private void toolbarViewsFade() {
-        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar_layout);
-        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
-            @Override
-            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
-                int maxScroll = appBarLayout.getTotalScrollRange();
-                float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
-                if (ratingBar != null && authorView != null) {
-                    ratingBar.setAlpha(1 - percentage);
-                    authorView.setAlpha(1 - percentage);
-                }
+        AppBarLayout appBarLayout = findViewById(R.id.app_bar_layout);
+        appBarLayout.addOnOffsetChangedListener((appBarLayout1, verticalOffset) -> {
+            int maxScroll = appBarLayout1.getTotalScrollRange();
+            float percentage = (float) Math.abs(verticalOffset) / (float) maxScroll;
+            if (ratingBar != null && authorView != null) {
+                ratingBar.setAlpha(1 - percentage);
+                authorView.setAlpha(1 - percentage);
             }
         });
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         if (loader instanceof BookInfoCursorLoader) {
             cursor = data;
             if (this.cursor != null) {
@@ -166,10 +165,9 @@ public class BookDetails extends AppCompatActivity implements LoaderManager.Load
     }
 
     private void initViews() {
-        authorView = (TextView) findViewById(R.id.book_details_author_view);
         authorView.setText(book.getAuthor());
         toolbar.setTitle(book.getTitle());
-        TextView descriptionView = (TextView) findViewById(R.id.book_details_description_view);
+        TextView descriptionView = findViewById(R.id.book_details_description_view);
         descriptionView.setMovementMethod(LinkMovementMethod.getInstance());
         descriptionView.setTransformationMethod(new LinkTransformation());
         descriptionView.setText(book.getDescription());
@@ -179,7 +177,7 @@ public class BookDetails extends AppCompatActivity implements LoaderManager.Load
     }
 
     private void imageViewInit() {
-        ImageView imageView = (ImageView) findViewById(R.id.book_cover);
+        ImageView imageView = findViewById(R.id.book_cover);
 
         ImageLoadingManager.startBuild()
                 .imageUrl(book.getImageUrl())
@@ -190,7 +188,6 @@ public class BookDetails extends AppCompatActivity implements LoaderManager.Load
     }
 
     private void initRatingViews() {
-        ratingBar = (CustomRatingBar) findViewById(R.id.book_details_rating);
         if (book.getMyRating() != 0) {
             ratingBar.setRating(book.getMyRating());
         } else {
@@ -200,27 +197,24 @@ public class BookDetails extends AppCompatActivity implements LoaderManager.Load
     }
 
     private void initFavoredButton() {
-        final FloatingActionButton favBtn = (FloatingActionButton) findViewById(R.id.book_details_favorited_button);
+        final FloatingActionButton favBtn = findViewById(R.id.book_details_favorited_button);
         if (book.getFavoriteId() == 0) {
             favBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
         } else {
             favBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
         }
-        favBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (book.getFavoriteId() == 0) {
-                    Uri uri = insertFavorited();
-                    if (uri == null) {
-                        return;
-                    }
-                    favBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
-                    updateBookFavoritedId(uri.getLastPathSegment());
-                } else {
-                    favBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
-                    deleteFavorited();
-                    updateBookFavoritedId("0");
+        favBtn.setOnClickListener(v -> {
+            if (book.getFavoriteId() == 0) {
+                Uri uri = insertFavorited();
+                if (uri == null) {
+                    return;
                 }
+                favBtn.setImageResource(R.drawable.ic_favorite_black_24dp);
+                updateBookFavoritedId(uri.getLastPathSegment());
+            } else {
+                favBtn.setImageResource(R.drawable.ic_favorite_border_black_24dp);
+                deleteFavorited();
+                updateBookFavoritedId("0");
             }
         });
     }
@@ -292,7 +286,7 @@ public class BookDetails extends AppCompatActivity implements LoaderManager.Load
     }
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    public void onLoaderReset(@NonNull Loader<Cursor> loader) {
     }
 
     @Override

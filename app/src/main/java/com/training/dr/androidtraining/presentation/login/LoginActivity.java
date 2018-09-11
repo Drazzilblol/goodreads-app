@@ -14,22 +14,26 @@ import com.training.dr.androidtraining.data.api.GoodreadApi;
 import com.training.dr.androidtraining.presentation.common.events.TokenRetrieveListener;
 import com.training.dr.androidtraining.ulils.Navigator;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import oauth.signpost.OAuth;
 
 import static com.training.dr.androidtraining.data.api.GoodreadApi.CALLBACK_URL;
 
 public class LoginActivity extends AppCompatActivity implements TokenRetrieveListener {
 
+    @BindView(R.id.activity_login_web_view)
     private WebView webView;
+
     private ProgressDialog progress;
     private int counter = 0;
     private GoodreadApi goodreadApi;
-    private OAuth10aService oAuth10aService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        ButterKnife.bind(this);
         goodreadApi = GoodreadApi.getInstance();
         initProgress();
         initWebView();
@@ -44,7 +48,6 @@ public class LoginActivity extends AppCompatActivity implements TokenRetrieveLis
     }
 
     private void initWebView() {
-        webView = (WebView) findViewById(R.id.activity_login_web_view);
         webView.getSettings().setJavaScriptEnabled(true);
 
         webView.setWebViewClient(new WebViewClient() {
@@ -60,7 +63,6 @@ public class LoginActivity extends AppCompatActivity implements TokenRetrieveLis
                 }
             }
         });
-
     }
 
     @Override

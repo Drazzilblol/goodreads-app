@@ -4,6 +4,7 @@ package com.training.dr.androidtraining.presentation.main.fragments;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.Loader;
 import android.text.TextUtils;
 import android.util.Log;
@@ -42,7 +43,7 @@ public class RatedBooksListFragment extends AbstractListFragment {
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+    public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
         if (loader instanceof SortedBooksLoader) {
             cursor = data;
             if (recyclerView.getAdapter() == null) {

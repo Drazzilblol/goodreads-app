@@ -1,6 +1,7 @@
 package com.training.dr.androidtraining.presentation.main.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,7 +32,7 @@ public class UserInfoFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_user_info, container, false);
         initArguments();
@@ -46,9 +47,9 @@ public class UserInfoFragment extends Fragment {
     }
 
     private void initViews() {
-        TextView nameView = (TextView) v.findViewById(R.id.user_name_view);
+        TextView nameView = v.findViewById(R.id.user_name_view);
         nameView.setText(user.getName());
-        TextView idView = (TextView) v.findViewById(R.id.user_id_view);
+        TextView idView = v.findViewById(R.id.user_id_view);
         idView.setText(user.getGoodreadId() + "");
         imageViewInit();
     }
