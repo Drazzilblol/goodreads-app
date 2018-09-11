@@ -56,13 +56,13 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OnFragmentLoadedListener, OnResultDialog {
 
     @BindView(R.id.drawer_layout)
-    private DrawerLayout drawer;
+    DrawerLayout drawer;
 
     @BindView(R.id.activity_main_tab_layout)
-    private TabLayout tabLayout;
+    TabLayout tabLayout;
 
     @BindView(R.id.activity_main_toolbar)
-    private Toolbar toolbar;
+    Toolbar toolbar;
 
     private BroadcastReceiver br;
     private IntentFilter intentFilter;

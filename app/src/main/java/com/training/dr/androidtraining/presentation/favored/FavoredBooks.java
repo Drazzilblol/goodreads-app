@@ -35,7 +35,7 @@ public class FavoredBooks extends AppCompatActivity implements OnDataChangedList
     private String tag;
 
     @BindView(R.id.activity_favored_toolbar)
-    private Toolbar toolbar;
+    Toolbar toolbar;
 
     private FragmentManager fragmentManager;
 

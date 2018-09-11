@@ -52,13 +52,13 @@ public class BookDetails extends AppCompatActivity implements LoaderManager.Load
     private AlertDialog dialog;
 
     @BindView(R.id.book_details_rating)
-    private CustomRatingBar ratingBar;
+    CustomRatingBar ratingBar;
 
     @BindView(R.id.book_details_toolbar)
-    private Toolbar toolbar;
+    Toolbar toolbar;
 
     @BindView(R.id.book_details_author_view)
-    private TextView authorView;
+    TextView authorView;
 
     private ContentObserver contentObserver;
 

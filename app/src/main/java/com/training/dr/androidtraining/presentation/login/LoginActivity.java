@@ -23,7 +23,7 @@ import static com.training.dr.androidtraining.data.api.GoodreadApi.CALLBACK_URL;
 public class LoginActivity extends AppCompatActivity implements TokenRetrieveListener {
 
     @BindView(R.id.activity_login_web_view)
-    private WebView webView;
+    WebView webView;
 
     private ProgressDialog progress;
     private int counter = 0;

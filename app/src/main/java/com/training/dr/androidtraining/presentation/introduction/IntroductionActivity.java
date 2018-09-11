@@ -23,22 +23,22 @@ public class IntroductionActivity extends AppCompatActivity implements View.OnCl
     private static int PAGE_COUNT = 3;
 
     @BindView(R.id.activity_introduction_view_pager)
-    private ViewPager viewPager;
+    ViewPager viewPager;
 
     @BindView(R.id.dots)
-    private Dots dots;
+    Dots dots;
 
     @BindView(R.id.btn_back)
-    private Button btnBack;
+    Button btnBack;
 
     @BindView(R.id.btn_next)
-    private Button btnNext;
+    Button btnNext;
 
     @BindView(R.id.btn_skip)
-    private Button btnSkip;
+    Button btnSkip;
 
     @BindView(R.id.btn_start)
-    private Button btnStart;
+    Button btnStart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
